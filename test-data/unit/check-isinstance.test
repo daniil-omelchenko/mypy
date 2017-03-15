@@ -1361,3 +1361,16 @@ def f(x: object) -> None:
     reveal_type(b)  # E: Revealed type is '__main__.A'
 [builtins fixtures/isinstance.pyi]
 [out]
+
+[case testIsinstanceAndNarrowTypeVariable]
+from typing import TypeVar
+
+class A: pass
+class B(A): pass
+
+T = TypeVar('T', bound=A)
+
+def f(x: T) -> None:
+    if isinstance(x, B):
+        reveal_type(x) # E: Revealed type is '__main__.B'
+[builtins fixtures/isinstance.pyi]
